@@ -11,8 +11,8 @@ jobs:
       - run: echo "Running unit tests"
     
   build-and-push-image:
-    reqiures:
-      - intergration
+    # reqiures:
+    #   - intergration
     machine: true
     resource_class: ifeelking1/self-hosted
     steps:
@@ -23,8 +23,8 @@ jobs:
           docker build -t $GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE_NAME:$IMAGE_TAG .
           docker push $GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE_NAME:$IMAGE_TAG 
   pull-and-deploy:
-    reqiures:
-      - build-and-push-image
+    # reqiures:
+    #   - build-and-push-image
     machine: true
     resource_class: ifeelking1/self-hosted
     steps:
