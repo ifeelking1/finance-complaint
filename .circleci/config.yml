@@ -8,7 +8,6 @@ jobs:
           username: ritesh2000
           password: $DOCKERHUB_PASSWORD
     steps:
-      - checkout
       - run: echo "Linting repository"
       - run: echo "Running unit tests"
     
@@ -18,7 +17,6 @@ jobs:
     steps:
       - reqiure:
           - intergration
-      - checkout
       - run: |
           echo $GCLOUD_SERVICE_KEY > /tmp/credentials.json
           gcloud auth activate-service-account --key-file=/tmp/credentials.json
@@ -31,7 +29,6 @@ jobs:
     steps:
       - reqiure:
           - build-and-push-image
-      - checkout
       - run: |
           echo $GCLOUD_SERVICE_KEY > /tmp/credentials.json
           gcloud auth activate-service-account --key-file=/tmp/credentials.json
