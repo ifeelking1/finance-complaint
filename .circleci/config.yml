@@ -33,12 +33,14 @@ jobs:
       resource_class: ifeelking1/self-hosted-2
       no_output_timeout: 30m
       steps:
-        - run: |
-            echo $GCLOUD_SERVICE_KEY > /tmp/credentials.json
-            gcloud auth activate-service-account --key-file=/tmp/credentials.json
-            gcloud auth configure-docker $GAR_LOCATION-docker.pkg.dev
-            sudo docker pull $GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE_NAME:$IMAGE_TAG
-            sudo docker run -it -v /home/data/finance_artifact:/app/finance_artifact -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -e MONGO_DB_URL="$MONGO_DB_URL" -e TRAINING=$TRAINING -e PREDICTION=$PREDICTION $GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE_NAME:$IMAGE_TAG
+        - run: 
+            no_output_timeout: 30m
+            command: |
+              echo $GCLOUD_SERVICE_KEY > /tmp/credentials.json
+              gcloud auth activate-service-account --key-file=/tmp/credentials.json
+              gcloud auth configure-docker $GAR_LOCATION-docker.pkg.dev
+              sudo docker pull $GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE_NAME:$IMAGE_TAG
+              sudo docker run -it -v /home/data/finance_artifact:/app/finance_artifact -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -e MONGO_DB_URL="$MONGO_DB_URL" -e TRAINING=$TRAINING -e PREDICTION=$PREDICTION $GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE_NAME:$IMAGE_TAG
           
 
 workflows:
