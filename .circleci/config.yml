@@ -25,7 +25,8 @@ jobs:
           sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
           sudo apt update
           sudo apt install --yes docker-ce
-          git clone https://github.com/ifeelking1/finance-complaint.git /var/opt/circleci/workdir
+          git clone https://github.com/ifeelking1/finance-complaint.git /var/opt/circleci/workdir/finance-complaint
+          cd /var/opt/circleci/workdir/finance-complaint
           docker build -t $GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE_NAME:$IMAGE_TAG .
           docker push $GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE_NAME:$IMAGE_TAG 
   pull-and-deploy:
