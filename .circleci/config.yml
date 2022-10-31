@@ -20,8 +20,14 @@ jobs:
           echo $GCLOUD_SERVICE_KEY > /tmp/credentials.json
           gcloud auth activate-service-account --key-file=/tmp/credentials.json
           gcloud auth configure-docker $GAR_LOCATION-docker.pkg.dev
-          docker build -t $GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE_NAME:$IMAGE_TAG .
-          docker push $GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE_NAME:$IMAGE_TAG 
+          sudo apt install --yes apt-transport-https ca-certificates curl gnupg2 software-properties-common
+          curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
+          sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
+          sudo apt update
+          sudo apt install --yes docker-ce
+          sudo usermod -aG docker $USER
+          sudo docker build -t $GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE_NAME:$IMAGE_TAG .
+          sudo docker push $GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE_NAME:$IMAGE_TAG 
   pull-and-deploy:
     # reqiures:
     #   - build-and-push-image
@@ -32,13 +38,8 @@ jobs:
           echo $GCLOUD_SERVICE_KEY > /tmp/credentials.json
           gcloud auth activate-service-account --key-file=/tmp/credentials.json
           gcloud auth configure-docker $GAR_LOCATION-docker.pkg.dev
-          sudo apt install --yes apt-transport-https ca-certificates curl gnupg2 software-properties-common
-          curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
-          sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
-          sudo apt update
-          sudo apt install --yes docker-ce
-          docker pull $GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE_NAME:$IMAGE_TAG
-          docker run -it -v /home/data/finance_artifact:/app/finance_artifact -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -e MONGO_DB_URL="$MONGO_DB_URL" -e TRAINING=$TRAINING -e PREDICTION=$PREDICTION $GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE_NAME:$IMAGE_TAG
+          sudo docker pull $GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE_NAME:$IMAGE_TAG
+          sudo docker run -it -v /home/data/finance_artifact:/app/finance_artifact -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -e MONGO_DB_URL="$MONGO_DB_URL" -e TRAINING=$TRAINING -e PREDICTION=$PREDICTION $GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE_NAME:$IMAGE_TAG
 
 workflows:
   say-hello-workflow:
