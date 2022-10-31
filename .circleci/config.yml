@@ -13,7 +13,7 @@ jobs:
     
   build-and-push-image:
       machine: true
-      resource_class: ifeelking1/self-hosted-2
+      resource_class: ifeelking1/self-hosted-3
       steps:
         - run: |
             echo $GCLOUD_SERVICE_KEY > /tmp/credentials.json
@@ -30,7 +30,7 @@ jobs:
             docker push $GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE_NAME:$IMAGE_TAG 
   pull-and-deploy:
       machine: true
-      resource_class: ifeelking1/self-hosted-2
+      resource_class: ifeelking1/self-hosted-3
       steps:
         - run: 
             no_output_timeout: 30m
