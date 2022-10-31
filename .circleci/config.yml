@@ -9,8 +9,8 @@ jobs:
           password: $DOCKERHUB_PASSWORD
     steps:
       - checkout
-      - run: "echo Linting repository"
-      - run: "echo Running unit tests"
+      - run: echo "Linting repository"
+      - run: echo "Running unit tests"
     
   build-and-push-image:
     machine: true
