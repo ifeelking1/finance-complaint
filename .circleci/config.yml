@@ -12,7 +12,7 @@ jobs:
     
   build-and-push-image:
     machine: true
-    resource_class: ifeelking1/self-hosted
+    resource_class: ifeelking1/self-hosted-2
     steps:
       - run: |
           echo $GCLOUD_SERVICE_KEY > /tmp/credentials.json
@@ -31,7 +31,7 @@ jobs:
     # reqiures:
     #   - build-and-push-image
     machine: true
-    resource_class: ifeelking1/self-hosted
+    resource_class: ifeelking1/self-hosted-2
     steps:
       - run: |
           echo $GCLOUD_SERVICE_KEY > /tmp/credentials.json
