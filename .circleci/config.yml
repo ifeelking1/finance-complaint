@@ -31,7 +31,6 @@ jobs:
   pull-and-deploy:
       machine: true
       resource_class: ifeelking1/self-hosted-2
-      no_output_timeout: 30m
       steps:
         - run: 
             no_output_timeout: 30m
