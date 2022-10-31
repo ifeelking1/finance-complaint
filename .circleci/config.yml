@@ -14,7 +14,7 @@ jobs:
     machine: true
     resource_class: ifeelking1/self-hosted
     steps:
-      - reqiure:
+      - reqiures:
           - intergration
       - run: |
           echo $GCLOUD_SERVICE_KEY > /tmp/credentials.json
@@ -26,7 +26,7 @@ jobs:
     machine: true
     resource_class: ifeelking1/self-hosted
     steps:
-      - reqiure:
+      - reqiures:
           - build-and-push-image
       - run: |
           echo $GCLOUD_SERVICE_KEY > /tmp/credentials.json
