@@ -15,12 +15,6 @@ jobs:
   build-and-push-image:
     machine: true
     resource_class: ifeelking1/self-hosted
-    environment:
-      REPOSITORY: finance-complaint
-      IMAGE_NAME: finance-complaint
-      IMAGE_TAG: latest
-      PROJECT_ID: our-velocity-363109
-      GAR_LOCATION: asia-south1
     steps:
       - reqiure:
           - intergration
@@ -34,14 +28,6 @@ jobs:
   pull-and-deploy:
     machine: true
     resource_class: ifeelking1/self-hosted
-    environment:
-      REPOSITORY: finance-complaint
-      IMAGE_NAME: finance-complaint
-      IMAGE_TAG: latest
-      PROJECT_ID: our-velocity-363109
-      GAR_LOCATION: asia-south1
-      TRAINING: 1
-      PREDICTION: 0
     steps:
       - reqiure:
           - build-and-push-image
