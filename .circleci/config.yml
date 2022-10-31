@@ -11,8 +11,6 @@ jobs:
       - run: echo "Running unit test"
     
   build-and-push-image:
-    # reqiures:
-    #   - intergration
     machine: true
     resource_class: ifeelking1/self-hosted
     steps:
