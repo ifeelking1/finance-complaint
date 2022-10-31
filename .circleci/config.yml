@@ -2,23 +2,15 @@ version: 2.1
 
 jobs:
   intergration:
-    # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
-    # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
     docker:
       - image: cimg/base:stable
-    # Add steps to the job
-    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
         auth:
           username: ritesh2000
           password: $DOCKERHUB_PASSWORD
     steps:
       - checkout
-      - run:
-          name: "Lint code"
-          command: "echo Linting repository"
-      - run:
-          name: "Run unit tests"
-          command: "echo Running unit tests"
+      - run: "echo Linting repository"
+      - run: "echo Running unit tests"
     
   build-and-push-image:
     machine: true
@@ -60,15 +52,7 @@ jobs:
           gcloud auth configure-docker $GAR_LOCATION-docker.pkg.dev
           docker pull $GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE_NAME:$IMAGE_TAG
           docker run -it -v /home/data/finance_artifact:/app/finance_artifact -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -e MONGO_DB_URL="$MONGO_DB_URL" -e TRAINING=$TRAINING -e PREDICTION=$PREDICTION $GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE_NAME:$IMAGE_TAG
-    
 
-
-     
-    
-
-
-# Invoke jobs via workflows
-# See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
   say-hello-workflow:
     jobs:
